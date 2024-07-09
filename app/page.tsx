@@ -1,8 +1,9 @@
 'use client'
-import Profile from "@/app/pages/profile/Page";
+import Page from "@/app/profile/page";
 import React, {useEffect} from "react";
+import Image from "next/image";
 
-export default function Home() {
+export default function Profile() {
   useEffect( () => {
     (
         async () => {
@@ -13,9 +14,6 @@ export default function Home() {
   }, [])
 
   return (
-      <>
-         <p>Home</p>
-      </>
-
+ <></>
   );
 }
