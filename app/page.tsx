@@ -1,7 +1,7 @@
 'use client'
-import Page from "@/app/profile/page";
 import React, {useEffect} from "react";
-import Image from "next/image";
+import Search from "@/app/explore/component/Search";
+import ListPostUsers from "@/app/home/ListPostUsers";
 
 export default function Profile() {
   useEffect( () => {
@@ -14,6 +14,8 @@ export default function Profile() {
   }, [])
 
   return (
- <></>
+      <div className="relative justify-center items-center w-full rounded-2xl dark:text-white">
+          <ListPostUsers/>
+      </div>
   );
 }

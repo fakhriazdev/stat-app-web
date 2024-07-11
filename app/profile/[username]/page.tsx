@@ -8,8 +8,8 @@ import {
     Personalcard,
     Share,
 } from "iconsax-react";
-import Detail from "@/app/profile/component/Detail";
-import Post from "@/app/profile/component/Post";
+import Detail from "@/app/profile/[username]/component/Detail";
+import Post from "@/app/profile/[username]/component/Post";
 
 export default function Page() {
     const [toogleContent, setToogleContent] = useState(true)
