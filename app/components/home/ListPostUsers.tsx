@@ -2,7 +2,7 @@ import React from 'react';
 import {ArrowSquareRight, Heart, Messages1} from "iconsax-react";
 import NewPost from "@/app/components/NewPost";
 
-const Post = () => {
+const ListPostUsers = () =>{
     return (
         <>
             <NewPost/>
@@ -62,9 +62,9 @@ const Post = () => {
                             </div>
                             <div className="flex p-4">
                                 <div className="w-full relative flex">
-                                    <textarea
-
-                                        className="relative resize-none h-auto min-h-4 overflow-hidden m-0 block flex-auto rounded-2xl border-2 border-solid border-black/20 bg-black/10 bg-clip-padding px-3 py-[0.25rem] text-base font-normal leading-[1.6] text-surface outline-none transition duration-200 ease-in-out placeholder:text-black dark:placeholder:text-white focus:z-[3] focus:border-primary focus:shadow-inset focus:outline-none motion-reduce:transition-none dark:border-white/10 dark:text-white dark:autofill:shadow-autofill dark:focus:border-primary"
+                                    <input
+                                        type="comment"
+                                        className="relative m-0 block flex-auto rounded-2xl border-2 border-solid border-black/20 bg-black/10 bg-clip-padding px-3 py-[0.25rem] text-base font-normal leading-[1.6] text-surface outline-none transition duration-200 ease-in-out placeholder:text-black dark:placeholder:text-white focus:z-[3] focus:border-primary focus:shadow-inset focus:outline-none motion-reduce:transition-none dark:border-white/10 dark:text-white dark:autofill:shadow-autofill dark:focus:border-primary"
                                         placeholder="Comment"
                                         aria-label="Search"
                                         id="exampleFormControlInput2"
@@ -159,8 +159,7 @@ const Post = () => {
                 </div>
             </div>
         </>
-
     );
 };
 
-export default Post;
+export default ListPostUsers;

@@ -1,7 +1,7 @@
 'use client'
 import React, {useEffect} from "react";
 import Search from "@/app/explore/component/Search";
-import ListPostUsers from "@/app/home/ListPostUsers";
+import ListPostUsers from "@/app/components/home/ListPostUsers";
 
 export default function Profile() {
   useEffect( () => {

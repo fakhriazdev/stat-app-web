@@ -16,7 +16,6 @@ export default function Page() {
     const handleToogleContent = (value:boolean) :void=>{
         setToogleContent(value)
     }
-    console.log(toogleContent)
     return (
         <>
             <div className='relative justify-center items-center w-full rounded-tl-2xl rounded-tr-2xl bg-black h-96 text-white'>

@@ -5,6 +5,7 @@ import Provider from "@/app/utils/themes/Provider";
 import React from "react";
 import Header from "@/app/components/Header";
 import Navbar from "@/app/components/Navbar";
+import {usePathname} from "next/navigation";
 
 
 
