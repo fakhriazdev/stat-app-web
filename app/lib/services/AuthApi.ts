@@ -1,7 +1,7 @@
 
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
-const baseURL = 'https://nest-api-portfolio.up.railway.app/api/auth/';
+const baseURL = 'auth/';
 
 export const authApi = createApi({
     reducerPath: 'authApi',
