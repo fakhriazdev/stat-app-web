@@ -5,8 +5,8 @@ import Provider from "@/app/utils/themes/Provider";
 import React from "react";
 import Header from "@/app/components/Header";
 import Navbar from "@/app/components/Navbar";
-import {usePathname} from "next/navigation";
-
+import store from "@/app/lib/store";
+import Providers from "@/app/lib/Provider";
 
 
 export const metadata: Metadata = {
@@ -22,8 +22,8 @@ export default function RootLayout({
 
   return (
     <html lang="en"  className={GeistSans.className}>
-    <Provider>
-
+    <Providers>
+      <Provider>
       <body className={`bg-background dark:bg-dark-background`}>
       <Header/>
       <Navbar>
@@ -31,6 +31,7 @@ export default function RootLayout({
       </Navbar>
       </body>
     </Provider>
+    </Providers>
     </html>
   );
 }
