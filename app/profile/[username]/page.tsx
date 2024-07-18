@@ -12,12 +12,13 @@ import Detail from "@/app/profile/[username]/component/Detail";
 import Post from "@/app/profile/[username]/component/Post";
 
 export default function Page() {
-    const [toogleContent, setToogleContent] = useState(true)
-    const handleToogleContent = (value:boolean) :void=>{
-        setToogleContent(value)
+    const [toggleContent, setToggleContent] = useState(true)
+    const handleToggleContent = (value:boolean) :void=>{
+        setToggleContent(value)
     }
     return (
         <>
+
             <div className='relative justify-center items-center w-full rounded-tl-2xl rounded-tr-2xl bg-black h-96 text-white'>
                 <Image
                     src="/background.jpeg"
@@ -65,16 +66,16 @@ export default function Page() {
                 </div>
             </div>
             <div className="w-full flex gap-1 items-center justify-between mb-6">
-                <button className="mx-auto p-2 flex flex-col w-full text-black dark:text-white bg-background dark:bg-dark-background" onClick={()=>handleToogleContent(true)}>
+                <button className="mx-auto p-2 flex flex-col w-full text-black dark:text-white bg-background dark:bg-dark-background" onClick={()=>handleToggleContent(true)}>
                     <Activity size="24" className="m-auto"/>
                     <h1 className="m-auto font-normal text-sm">Posts</h1>
                 </button>
-                <button className="mx-auto p-2 flex flex-col w-full text-black dark:text-white bg-background dark:bg-dark-background" onClick={()=>handleToogleContent(false)}>
+                <button className="mx-auto p-2 flex flex-col w-full text-black dark:text-white bg-background dark:bg-dark-background" onClick={()=>handleToggleContent(false)}>
                     <Personalcard size="24" className="m-auto"/>
                     <h1 className="m-auto font-normal text-sm">Details</h1>
                 </button>
             </div>
-            {toogleContent ? <Post /> : <Detail />}
+            {toggleContent ? <Post /> : <Detail />}
         </>
     );
 };

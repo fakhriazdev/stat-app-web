@@ -21,16 +21,16 @@ export default function RootLayout({
 
   return (
     <html lang="en"  className={GeistSans.className}>
-    <Providers>
-      <Provider>
       <body className={`bg-background dark:bg-dark-background`}>
-      <Header/>
-      <Navbar>
-        {children}
-      </Navbar>
+        <Providers>
+          <Provider>
+            <Header/>
+              <Navbar>
+                {children}
+              </Navbar>
+        </Provider>
+        </Providers>
       </body>
-    </Provider>
-    </Providers>
     </html>
   );
 }
