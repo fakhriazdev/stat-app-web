@@ -16,7 +16,7 @@ export const authApi = createApi({
                     password: password
                 }
             }),
-            transformResponse: (resp:any) => resp.data
+            transformResponse: (resp:any) => resp
 
         }),
     }),

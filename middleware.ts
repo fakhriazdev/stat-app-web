@@ -4,27 +4,24 @@ export function middleware(request: NextRequest) {
     const isAuthenticated = request.cookies.get('jwt');
     const url = request.url;
 
-    // Redirect to home if authenticated user tries to access /login or /register
+    // If authenticated and trying to access /login or /register, redirect to /
     if (isAuthenticated && (url.includes("/login") || url.includes("/register"))) {
         return NextResponse.redirect(new URL('/', request.url));
     }
 
-    // Allow access to authenticated users for other paths
+    // If authenticated and not trying to access /login or /register, allow access
     if (isAuthenticated) {
         return NextResponse.next();
     }
 
-    // Redirect to /login for unauthenticated users accessing protected routes
-    if (!isAuthenticated && (url.includes("/profile") || url === "/explore")) {
+    // If not authenticated, redirect to /login for all configured routes except /login and /register
+    if (!url.includes("/login") && !url.includes("/register")) {
         return NextResponse.redirect(new URL('/login', request.url));
     }
-
-    // Allow access to public routes like /, /login, /register for unauthenticated users
-    return NextResponse.next();
 }
 
 export const config = {
-    matcher:  [
+    matcher: [
         '/profile/:path*',
         '/',
         '/explore',

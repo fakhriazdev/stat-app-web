@@ -16,7 +16,7 @@ const authSlice = createSlice({
         setUser: (state, {payload}) => {
             return {
                 ...state,
-                data: payload.data,
+                data: payload,
                 isLoading: false,
                 isError: false
             };

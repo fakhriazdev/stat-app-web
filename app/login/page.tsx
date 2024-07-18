@@ -2,9 +2,11 @@
 
 import React, {useState} from "react";
 import {useLoginMutation} from "@/app/lib/services/AuthApi";
+import { useRouter } from 'next/navigation'
 
 
 export default function Page(){
+    const router = useRouter()
     const [loginMutation, { isLoading, isError, isSuccess }] = useLoginMutation();
 
     const [form, setForm] = useState(
@@ -27,7 +29,9 @@ export default function Page(){
         e.preventDefault();
         try {
             const { data } = await loginMutation(form);
-            console.log('Login successful!', data);
+            if(data.statusCode === 202){
+                router.push('/')
+            }
         } catch (error) {
             console.error('Login failed:', error);
         }
