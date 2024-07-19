@@ -1,36 +1,22 @@
-import { configureStore } from "@reduxjs/toolkit";
 
-import { authApi } from "./services/AuthApi";
-import {persistReducer, persistStore} from "redux-persist";
-import storage from 'redux-persist/lib/storage';
-import authReducer from './features/authSlice'
-import {FLUSH, PAUSE, PERSIST, PURGE, REGISTER, REHYDRATE} from "redux-persist/es/constants";
-import {Persistor} from "redux-persist/es/types";
-
-const persistConfig = {
-    key: "auth",
-    storage: storage,
-}
-
-const persistedAuthReducer = persistReducer(persistConfig, authReducer)
+import {configureStore} from "@reduxjs/toolkit";
+import uiSliceReducer from "./features/UiSlice";
+import authReducer, { loginAction } from "./features/AuthSlice";
+import asyncActionMiddleware from "@/app/lib/asyncActionMiddleware";
+import {store} from "next/dist/build/output/store";
 
 
-export const store = configureStore({
+
+const setupStore=() =>
+    configureStore({
     reducer: {
-        [authApi.reducerPath]: authApi.reducer,
-        auth: persistedAuthReducer
+        auth: authReducer,
+        ui: uiSliceReducer,
     },
-
-    middleware: (getDefaultMiddleware) =>
-        getDefaultMiddleware(
-            {
-                serializableCheck: {
-                    ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
-                }}
-        ).concat(
-
-            authApi.middleware
-        ),
+        middleware:(getDefaultMiddleware)=>
+            getDefaultMiddleware()
+                .concat(asyncActionMiddleware)
 });
-
-export const persistor:Persistor = persistStore(store)
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;
+export default setupStore;

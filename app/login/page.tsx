@@ -1,41 +1,48 @@
 'use client'
 
 import React, {useState} from "react";
-import {useLoginMutation} from "@/app/lib/services/AuthApi";
-import { useRouter } from 'next/navigation'
+import { loginAction } from '../lib/features/AuthSlice';
+import {useDispatch, useSelector} from "react-redux";
+
 
 
 export default function Page(){
-    const router = useRouter()
-    const [loginMutation, { isLoading, isError, isSuccess }] = useLoginMutation();
 
+    const dispatch = useDispatch();
+    const uiState = useSelector((state) => state.ui);
     const [form, setForm] = useState(
         {
-            username:null,
-            password:null,
+            username:"",
+            password:"",
         }
     )
+    console.log(uiState.isLoading)
 
     const handleFormInput = (e: React.ChangeEvent<HTMLInputElement>) => {
         console.log(e.target.value, e.target.name);
         const { name, value } = e.target;
         setForm((prevForm) => ({
             ...prevForm,
-            [name]: value, // Update the specific field (username or password)
+            [name]: value,
         }));
     };
 
     const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        try {
-            const { data } = await loginMutation(form);
-            if(data.statusCode === 202){
-                router.push('/')
-            }
-        } catch (error) {
-            console.error('Login failed:', error);
-        }
+        dispatch(loginAction(form));
     };
+
+    // const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    //     e.preventDefault();
+    //
+    //     const resultAction = dispatch(authAction(authService.login(form)));
+    //
+    //         // Assuming successful login, navigate to another page
+    //         // if (statusCode === 200) {
+    //         //     router.push('/dashboard'); // Replace with your desired route
+    //         // }
+    //
+    // };
 
 
     return (
