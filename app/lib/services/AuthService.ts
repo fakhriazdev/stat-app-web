@@ -1,8 +1,6 @@
 // AuthService.ts
 
-import axiosInstance from "@/app/api/AxiosInstance";
-
-
+import axiosInstance from '@/app/api/AxiosInstance';
 
 const baseURL = 'api/auth/';
 //
@@ -12,23 +10,19 @@ const baseURL = 'api/auth/';
 // }
 
 const AuthService = {
-    login: async (user: any) => {
-        try {
-            const { data } = await axiosInstance.post(`${baseURL}login`, user);
-            return data;
-        } catch (error) {
-            throw new Error('Login failed'); // Handle error appropriately
-        }
-    },
+  login: async (user: any) => {
+    const { data } = await axiosInstance.post(`${baseURL}login`, user);
+    return data;
+  },
 
-    logout: async () => {
-        try {
-            const { data } = await axiosInstance.post(`${baseURL}logout`);
-            return data;
-        } catch (error) {
-            throw new Error('Logout failed');
-        }
+  logout: async () => {
+    try {
+      const { data } = await axiosInstance.post(`${baseURL}logout`);
+      return data;
+    } catch (error) {
+      throw new Error('Logout failed');
     }
+  },
 };
 
 export default AuthService;

@@ -1,33 +1,37 @@
 // uiSlice.ts
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
 interface UiState {
-    isLoading: boolean;
+  isLoading: boolean;
+  error: string | null;
 }
 
 const initialState: UiState = {
-    isLoading: false,
+  isLoading: false,
+  error: null,
 };
 
 const uiSlice = createSlice({
-    name: "ui",
-    initialState,
-    reducers: {
-        setLoading: (state, action) => {
-            state.isLoading = action.payload;
-        },
-        loading: (state) => {
-            state.isLoading = true;
-        },
-        success: (state) => {
-            state.isLoading = false;
-            // Additional success state handling if needed
-        },
-        error: (state) => {
-            state.isLoading = false;
-            // Additional error state handling if needed
-        },
+  name: 'ui',
+  initialState,
+  reducers: {
+    setLoading: (state, action) => {
+      state.isLoading = action.payload;
+      state.error = null;
     },
+    loading: (state) => {
+      state.isLoading = true;
+      state.error = null;
+    },
+    success: (state) => {
+      state.isLoading = false;
+      state.error = null;
+    },
+    error: (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
+  },
 });
 
 export const { setLoading, loading, success, error } = uiSlice.actions;
