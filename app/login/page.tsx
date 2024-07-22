@@ -2,17 +2,15 @@
 
 import React, { useState } from 'react';
 import { loginAction } from '../lib/features/AuthSlice';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { AppDispatch } from '../lib/store';
 
 export default function Page() {
-  const dispatch = useDispatch();
-  const uiState = useSelector((state) => state.ui);
+  const dispatch = useDispatch<AppDispatch>();
   const [form, setForm] = useState({
     username: '',
     password: '',
   });
-  console.log(uiState.isLoading);
-  console.log(uiState.error);
 
   const handleFormInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     console.log(e.target.value, e.target.name);
@@ -25,8 +23,11 @@ export default function Page() {
 
   const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-    dispatch(loginAction(form));
+    try {
+      dispatch(loginAction(form));
+    } catch (error) {
+      console.error('Login failed:', error);
+    }
   };
 
   // const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {

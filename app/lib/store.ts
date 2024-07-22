@@ -1,22 +1,20 @@
+import { combineReducers, configureStore } from '@reduxjs/toolkit';
+import uiSliceReducer from './features/UiSlice';
+import authReducer from './features/AuthSlice';
+import asyncActionMiddleware from '@/app/lib/asyncActionMiddleware';
+import { store } from 'next/dist/build/output/store';
 
-import {configureStore} from "@reduxjs/toolkit";
-import uiSliceReducer from "./features/UiSlice";
-import authReducer, { loginAction } from "./features/AuthSlice";
-import asyncActionMiddleware from "@/app/lib/asyncActionMiddleware";
-import {store} from "next/dist/build/output/store";
-
-
-
-const setupStore=() =>
-    configureStore({
-    reducer: {
-        auth: authReducer,
-        ui: uiSliceReducer,
-    },
-        middleware:(getDefaultMiddleware)=>
-            getDefaultMiddleware()
-                .concat(asyncActionMiddleware)
+const rootReducer = combineReducers({
+  auth: authReducer,
+  ui: uiSliceReducer,
 });
-export type RootState = ReturnType<typeof store.getState>;
+const setupStore = () =>
+  configureStore({
+    reducer: rootReducer,
+    middleware: (getDefaultMiddleware) =>
+      getDefaultMiddleware().concat(asyncActionMiddleware),
+  });
+
+export type RootState = ReturnType<typeof rootReducer>;
 export type AppDispatch = typeof store.dispatch;
 export default setupStore;
