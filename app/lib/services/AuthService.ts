@@ -16,12 +16,8 @@ const AuthService = {
   },
 
   logout: async () => {
-    try {
       const { data } = await axiosInstance.post(`${baseURL}logout`);
       return data;
-    } catch (error) {
-      throw new Error('Logout failed');
-    }
   },
 };
 

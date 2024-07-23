@@ -13,7 +13,6 @@ const Navbar = (props: { children: any; }) => {
 
     const [activeSegment, setActiveSegment] = useState(segments[1]);
 
-    // Update activeSegment whenever pathname changes
     useEffect(() => {
         setActiveSegment(segments[1]);
     }, [pathname]);

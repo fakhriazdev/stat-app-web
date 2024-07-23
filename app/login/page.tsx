@@ -1,10 +1,11 @@
 'use client';
 
-import React, {useEffect, useState} from 'react';
+import React, { useState} from 'react';
 import { loginAction } from '../lib/features/AuthSlice';
-import {useDispatch, useSelector} from 'react-redux';
-import {AppDispatch, RootState} from '../lib/store';
-import { useRouter } from 'next/navigation'
+import {useDispatch} from 'react-redux';
+import {AppDispatch} from '../lib/store';
+import Link from "next/link";
+
 
 export default function Page() {
 
@@ -28,7 +29,6 @@ export default function Page() {
     e.preventDefault();
     try {
       dispatch(loginAction(form));
-
     } catch (error) {
     }
   };
@@ -91,12 +91,12 @@ export default function Page() {
               >
                 Sign In
               </button>
-              <a
+              <Link
                 className="inline-block align-baseline font-bold text-sm text-primary hover:text-blue-500"
-                href="#"
+                href={'/register'}
               >
                 dont have an account?
-              </a>
+              </Link>
             </div>
           </form>
           <p className="text-center text-gray-500 text-xs">
