@@ -1,16 +1,19 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import { loginAction } from '../lib/features/AuthSlice';
-import { useDispatch } from 'react-redux';
-import { AppDispatch } from '../lib/store';
+import {useDispatch, useSelector} from 'react-redux';
+import {AppDispatch, RootState} from '../lib/store';
+import { useRouter } from 'next/navigation'
 
 export default function Page() {
+
   const dispatch = useDispatch<AppDispatch>();
   const [form, setForm] = useState({
     username: '',
     password: '',
   });
+
 
   const handleFormInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     console.log(e.target.value, e.target.name);
@@ -25,8 +28,8 @@ export default function Page() {
     e.preventDefault();
     try {
       dispatch(loginAction(form));
+
     } catch (error) {
-      console.error('Login failed:', error);
     }
   };
 

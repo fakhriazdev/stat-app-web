@@ -1,12 +1,15 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import AuthService from '../services/AuthService';
 
+
 interface AuthState {
   user: any;
+  isLogin:boolean;
 }
 
 const initialState: AuthState = {
   user: null,
+  isLogin:false
 };
 
 type LoginPayload = { username: string; password: string };
@@ -30,6 +33,7 @@ const authSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(loginAction.fulfilled, (state, { payload }) => {
       state.user = payload;
+      state.isLogin = true
     });
   },
 });

@@ -12,7 +12,7 @@ const asyncActionMiddleware: Middleware =
     }
 
     if (action.type.endsWith('/fulfilled')) {
-      dispatch(success());
+      dispatch(success(payload));
     }
 
     if (action.type.endsWith('/rejected')) {

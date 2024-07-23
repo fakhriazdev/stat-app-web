@@ -3,12 +3,12 @@ import { createSlice } from '@reduxjs/toolkit';
 
 interface UiState {
   isLoading: boolean;
-  error: string | null;
+  message: string | null;
 }
 
 const initialState: UiState = {
   isLoading: false,
-  error: null,
+  message: null,
 };
 
 const uiSlice = createSlice({
@@ -17,19 +17,19 @@ const uiSlice = createSlice({
   reducers: {
     setLoading: (state, action) => {
       state.isLoading = action.payload;
-      state.error = null;
+      state.message = null;
     },
     loading: (state) => {
       state.isLoading = true;
-      state.error = null;
+      state.message = null;
     },
-    success: (state) => {
+    success: (state,action) => {
       state.isLoading = false;
-      state.error = null;
+      state.message = action.payload;
     },
     error: (state, action) => {
       state.isLoading = false;
-      state.error = action.payload;
+      state.message = action.payload;
     },
   },
 });
