@@ -5,7 +5,7 @@ import { ThemeProvider } from 'next-themes';
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { redirect } from 'next/navigation'
-import {Toaster} from "react-hot-toast";
+import toast, {Toaster} from "react-hot-toast";
 
 
 type Props = { children: string | React.JSX.Element | React.JSX.Element[] };
@@ -34,7 +34,15 @@ const Provider = ({ children }: Props) => {
   }
   return (
       <ThemeProvider enableSystem={true} attribute="class">
-        <div><Toaster/></div>
+        <div>
+          <Toaster
+              toastOptions={{
+                style: {
+                  fontSize:14,
+                }
+              }}
+          />
+        </div>
         {children}
       </ThemeProvider>
   );
