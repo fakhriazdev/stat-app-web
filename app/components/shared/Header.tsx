@@ -4,12 +4,15 @@ import ThemeSwitcher from "@/app/utils/themes/ThemeSwitcher";
 import {useDispatch} from "react-redux";
 import {AppDispatch} from "@/app/lib/store";
 import {logoutAction} from "@/app/lib/features/AuthSlice";
+import { useRouter } from 'next/navigation';
 
 
 const Header = () => {
     const dispatch = useDispatch<AppDispatch>();
-    const handleLogout = () =>{
-        dispatch(logoutAction())
+    const router = useRouter();
+    const handleLogout = async() =>{
+        await dispatch(logoutAction())
+        router.push('/login');
     }
     return (
         <div

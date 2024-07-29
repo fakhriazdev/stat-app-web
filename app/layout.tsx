@@ -3,9 +3,10 @@ import { GeistSans } from "geist/font/sans";
 import "./globals.css";
 import Provider from "@/app/utils/themes/Provider";
 import React from "react";
-import Header from "@/app/components/Header";
-import Navbar from "@/app/components/Navbar";
+import Header from "@/app/components/shared/Header";
+import Navbar from "@/app/components/shared/Navbar";
 import Providers from "@/app/lib/Provider";
+
 
 
 export const metadata: Metadata = {
@@ -20,9 +21,9 @@ export default function RootLayout({
 }>) {
 
   return (
-    <html lang="en"  className={GeistSans.className}>
+    <html lang="en" className={GeistSans.className}>
       <body className={`bg-background dark:bg-dark-background`}>
-        <Providers>
+      <Providers>
           <Provider>
             <Header/>
               <Navbar>

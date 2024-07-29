@@ -13,6 +13,7 @@ const initialState: AuthState = {
 };
 
 type LoginPayload = { username: string; password: string };
+type RegisterPayload = { name:string ,username: string; password: string };
 
 const loginAction = createAsyncThunk('auth/login', async (payload: LoginPayload, { rejectWithValue }) => {
     try {
@@ -23,6 +24,15 @@ const loginAction = createAsyncThunk('auth/login', async (payload: LoginPayload,
       return rejectWithValue(errorMessage);
     }
   });
+const registerAction = createAsyncThunk('auth/register', async (payload: RegisterPayload, { rejectWithValue }) => {
+  try {
+    return await AuthService.register(payload);
+
+  } catch (error: any) {
+    const errorMessage = error.response.data.message;
+    return rejectWithValue(errorMessage);
+  }
+});
 const logoutAction = createAsyncThunk('auth/logout', async (_, { rejectWithValue }) => {
   try {
     return await AuthService.logout();
@@ -52,6 +62,21 @@ const authSlice = createSlice({
       toast.error(errorMessage);
     });
 
+    builder.addCase(registerAction.pending, () => {
+      toast.loading("loading");
+    });
+    builder.addCase(registerAction.fulfilled, (state, { payload }) => {
+      state.user = payload;
+      state.isLogin = true
+      toast.dismiss();
+      toast.success('register successful');
+    });
+    builder.addCase(registerAction.rejected, (state, action) => {
+      const errorMessage = action.payload as string;
+      toast.dismiss();
+      toast.error(errorMessage);
+    });
+
     builder.addCase(logoutAction.pending, () => {
       toast.loading("loading");
     });
@@ -70,4 +95,4 @@ const authSlice = createSlice({
 });
 
 export default authSlice.reducer;
-export { loginAction,logoutAction };
+export { loginAction,logoutAction,registerAction};

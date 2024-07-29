@@ -1,6 +1,6 @@
 import React from 'react';
 import {ArrowSquareRight, Heart, Messages1} from "iconsax-react";
-import NewPost from "@/app/components/NewPost";
+import NewPost from "@/app/components/shared/NewPost";
 
 const Post = () => {
     return (

@@ -38,6 +38,8 @@ const Provider = ({ children }: Props) => {
           <Toaster
               toastOptions={{
                 style: {
+                    backgroundColor:'#2D96F3',
+                    color:'white',
                   fontSize:14,
                 }
               }}
