@@ -1,8 +1,8 @@
 'use client';
 
 import Link from "next/link";
-import {useDispatch} from "react-redux";
-import {AppDispatch} from "@/app/lib/store";
+import {useDispatch, useSelector} from "react-redux";
+import {AppDispatch, RootState} from "@/app/lib/store";
 import * as y from "yup";
 import {useFormik} from "formik";
 import {registerAction} from "@/app/lib/features/AuthSlice";
@@ -10,6 +10,7 @@ import React from "react";
 import {redirect} from "next/navigation";
 
 export default function Page(){
+    const { isLoading } = useSelector((state: RootState) => state.ui);
     const dispatch = useDispatch<AppDispatch>();
     const schema = y.object({
         name: y.string().required().min(3).max(20),
@@ -111,8 +112,8 @@ export default function Page(){
                         </div>
                         <div className="flex items-center justify-between">
                             <button
-                                disabled={!isValid || !dirty}
-                                className={`${!isValid || !dirty ? 'bg-primary/20 text-white/20' : 'bg-primary hover:bg-primary/80 text-white'} font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline`}
+                                disabled={!isValid || !dirty || isLoading}
+                                className={`${!isValid || !dirty || isLoading ? 'bg-primary/20 text-white/20' : 'bg-primary hover:bg-primary/80 text-white'} font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline`}
                                 type="submit"
                             >
                                 Sign Up

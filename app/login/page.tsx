@@ -2,8 +2,8 @@
 
 import React from 'react';
 import { loginAction } from '../lib/features/AuthSlice';
-import {useDispatch} from 'react-redux';
-import {AppDispatch} from '../lib/store';
+import {useDispatch, useSelector} from 'react-redux';
+import {AppDispatch, RootState} from '../lib/store';
 import Link from "next/link";
 import {useFormik} from "formik";
 import * as y from "yup";
@@ -11,7 +11,7 @@ import * as y from "yup";
 
 export default function Page() {
   const dispatch = useDispatch<AppDispatch>();
-
+  const { isLoading } = useSelector((state: RootState) => state.ui);
   const schema = y.object({
     username: y.string().required(),
     password: y.string().required(),
@@ -85,8 +85,8 @@ export default function Page() {
             </div>
             <div className="flex items-center justify-between">
               <button
-                  disabled={!isValid || !dirty}
-                className={`${!isValid || !dirty ? 'bg-primary/20 text-white/20' : 'bg-primary hover:bg-primary/80 text-white'} font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline`}
+                  disabled={!isValid || !dirty || isLoading}
+                className={`${!isValid || !dirty || isLoading ? 'bg-primary/20 text-white/20' : 'bg-primary hover:bg-primary/80 text-white'} font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline`}
                 type="submit"
               >
                 Sign In

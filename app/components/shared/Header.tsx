@@ -1,13 +1,14 @@
 'use client';
 import React from 'react';
 import ThemeSwitcher from "@/app/utils/themes/ThemeSwitcher";
-import {useDispatch} from "react-redux";
-import {AppDispatch} from "@/app/lib/store";
+import {useDispatch, useSelector} from "react-redux";
+import {AppDispatch, RootState} from "@/app/lib/store";
 import {logoutAction} from "@/app/lib/features/AuthSlice";
 import { useRouter } from 'next/navigation';
 
 
 const Header = () => {
+    const { isLoading } = useSelector((state: RootState) => state.ui);
     const dispatch = useDispatch<AppDispatch>();
     const router = useRouter();
     const handleLogout = async() =>{
@@ -21,7 +22,9 @@ const Header = () => {
             <p className='font-bold'>Stat</p>
                 <div className="flex gap-2">
                 <ThemeSwitcher/>
-                <button onClick={()=>{handleLogout()}}>Logout</button>
+                <button
+                    disabled={isLoading}
+                    onClick={()=>{handleLogout()}}>Logout</button>
                 </div>
             </div>
         </div>
