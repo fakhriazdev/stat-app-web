@@ -1,5 +1,5 @@
 'use client'
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import Image from "next/image";
 import {
     Activity,
@@ -10,12 +10,26 @@ import {
 } from "iconsax-react";
 import Detail from "@/app/profile/[username]/component/Detail";
 import Post from "@/app/profile/[username]/component/Post";
+import {useDispatch, useSelector} from "react-redux";
+import {AppDispatch, RootState} from "@/app/lib/store";
+import {profileAction} from "@/app/lib/features/profileSlice";
+import {getCookie} from 'cookies-next';
 
 export default function Page() {
+    const user = getCookie('user')
+    const dispatch = useDispatch<AppDispatch>();
+    const { profile } = useSelector((state: RootState) => state.profile);
     const [toggleContent, setToggleContent] = useState(true)
     const handleToggleContent = (value:boolean) :void=>{
         setToggleContent(value)
     }
+    useEffect(() => {
+        if (user) {
+            dispatch(profileAction(user));
+        }
+    }, []);
+
+    console.log(profile)
     return (
         <>
 

@@ -3,14 +3,13 @@ import React, {useEffect, useState} from 'react';
 
 import {AddSquare, Home, SearchNormal1} from "iconsax-react";
 import Link from "next/link";
-import { usePathname } from 'next/navigation'
-
+import { usePathname} from 'next/navigation'
+import {getCookie} from 'cookies-next';
 const Navbar = (props: { children: any; }) => {
     const {children} = props;
     const pathname = usePathname()
     let segments = pathname.split('/')
     const isNavbarVisible = !["/login", "/register"].includes(pathname);
-
     const [activeSegment, setActiveSegment] = useState(segments[1]);
 
     useEffect(() => {
@@ -20,6 +19,8 @@ const Navbar = (props: { children: any; }) => {
     const isActive = (pathname: string) => {
         return activeSegment === pathname ? 'text-primary' : '';
     };
+
+
     return (
         <>
             {isNavbarVisible ?
@@ -35,7 +36,7 @@ const Navbar = (props: { children: any; }) => {
                                 />
                                 <h1 className="hidden md:block lg:block text-sm">New Post</h1>
                             </div>
-                            <Link href="/profile/schacian29"
+                            <Link href={`/profile/${getCookie('user')}`}
                                   className={`flex flex-col md:flex-row items-center justify-start gap-3 ${isActive('profile')}`}>
                                 <div className='w-7 h-7 my-auto bg-white rounded-xl'></div>
                                 <h1 className="hidden md:block lg:block text-sm">Profile</h1>

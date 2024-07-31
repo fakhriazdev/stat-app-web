@@ -1,5 +1,3 @@
-// AuthService.ts
-
 import axiosInstance from '@/app/api/AxiosInstance';
 
 const baseURL = 'api/auth/';
@@ -17,6 +15,10 @@ const AuthService = {
       const { data } = await axiosInstance.post(`${baseURL}logout`);
       return data;
   },
+    userInfo: async () => {
+        const { data } = await axiosInstance.get(`${baseURL}user-info`);
+        return data;
+    },
 };
 
 export default AuthService;

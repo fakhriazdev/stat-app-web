@@ -3,10 +3,12 @@ import uiSliceReducer from './features/UiSlice';
 import authReducer from './features/AuthSlice';
 import asyncActionMiddleware from '@/app/lib/asyncActionMiddleware';
 import { store } from 'next/dist/build/output/store';
+import profileSlice from "@/app/lib/features/profileSlice";
 
 const rootReducer = combineReducers({
-  auth: authReducer,
-  ui: uiSliceReducer,
+    auth: authReducer,
+    ui: uiSliceReducer,
+    profile:profileSlice,
 });
 const setupStore = () =>
   configureStore({

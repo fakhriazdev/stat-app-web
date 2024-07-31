@@ -4,7 +4,7 @@ const nextConfig = {
         return [
             {
                 source: '/api/:path*',
-                destination: 'https://nest-api-portfolio.up.railway.app/api/:path*', // Replace with your actual API base URL
+                destination: 'https://nest-api-portfolio.up.railway.app/api/:path*',
             },
         ];
     },

@@ -1,5 +1,5 @@
 import axios, { AxiosInstance } from 'axios';
-import { getCookie } from 'cookies-next';
+import {getCookie} from 'cookies-next';
 
 const axiosInstance: AxiosInstance = axios.create();
 

@@ -1,9 +1,15 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import AuthService from '../services/AuthService';
 import toast from 'react-hot-toast';
+import {deleteCookie, getCookie, setCookie} from 'cookies-next';
+
+interface User {
+  username: string;
+  name: string;
+}
 
 interface AuthState {
-  user: any;
+  user:User | null
   isLogin:boolean;
 }
 
@@ -17,8 +23,9 @@ type RegisterPayload = { name:string ,username: string; password: string };
 
 const loginAction = createAsyncThunk('auth/login', async (payload: LoginPayload, { rejectWithValue }) => {
     try {
-      return await AuthService.login(payload);
-
+      const response =  await AuthService.login(payload);
+      setCookie('user', response.data.username,);
+      return response
     } catch (error: any) {
       const errorMessage = error.response.data.message;
       return rejectWithValue(errorMessage);
@@ -35,7 +42,9 @@ const registerAction = createAsyncThunk('auth/register', async (payload: Registe
 });
 const logoutAction = createAsyncThunk('auth/logout', async (_, { rejectWithValue }) => {
   try {
+    deleteCookie('user');
     return await AuthService.logout();
+
   } catch (error: any) {
     const errorMessage = error.response.data.message;
     return rejectWithValue(errorMessage);
@@ -51,7 +60,9 @@ const authSlice = createSlice({
       toast.loading("loading");
     });
     builder.addCase(loginAction.fulfilled, (state, { payload }) => {
-      state.user = payload;
+      if (payload.data) {
+        state.user = payload.data;
+      }
       state.isLogin = true
       toast.dismiss();
       toast.success('Login successful');
@@ -91,6 +102,7 @@ const authSlice = createSlice({
       toast.dismiss();
       toast.error(errorMessage);
     });
+
   },
 });
 
