@@ -36,7 +36,7 @@ export default function Page() {
 
     let isSelf = false
     useEffect(() => {
-        isSelf = username === profile?.userId
+        isSelf = username === profile.userId
         if (username) {
             dispatch(profileAction(username));
         }
