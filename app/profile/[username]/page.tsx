@@ -13,22 +13,11 @@ import {AppDispatch, RootState} from "@/app/lib/store";
 import {profileAction} from "@/app/lib/features/profileSlice";
 import {getCookie} from 'cookies-next';
 
-interface Profile {
-    userId: string;
-    user: {
-        name: string;
-    };
-    title: string;
-    projects: any[];
-    follower: any[];
-    bio: string;
-    education: any[];
-}
 
 export default function Page() {
     const {username} = JSON.parse(getCookie('user') as string)
     const dispatch = useDispatch<AppDispatch>();
-    const profile:Profile = useSelector((state: RootState) => state.profile.profile) as Profile;
+    const profile = useSelector((state: RootState) => state.profile.profile) as any;
     const [toggleContent, setToggleContent] = useState(true)
     const handleToggleContent = (value:boolean) :void=>{
         setToggleContent(value)
