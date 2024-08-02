@@ -1,6 +1,6 @@
 import axiosInstance from '@/app/api/AxiosInstance';
 
-const baseURL = 'api/auth/';
+const baseURL = '/api/auth/';
 
 const AuthService = {
   login: async (user: any) => {

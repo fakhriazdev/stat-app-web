@@ -3,7 +3,7 @@ import React, {useEffect, useState} from 'react';
 
 import {AddSquare, Home, SearchNormal1} from "iconsax-react";
 import Link from "next/link";
-import { usePathname} from 'next/navigation'
+import {redirect, usePathname} from 'next/navigation'
 import {getCookie} from 'cookies-next';
 const Navbar = (props: { children: any; }) => {
     const {children} = props;
@@ -11,8 +11,19 @@ const Navbar = (props: { children: any; }) => {
     let segments = pathname.split('/')
     const isNavbarVisible = !["/login", "/register"].includes(pathname);
     const [activeSegment, setActiveSegment] = useState(segments[1]);
-
+    const [user, setUser] = useState<string | null>(null);
     useEffect(() => {
+        const userCookie = getCookie('user');
+        if (userCookie) {
+            try {
+                const { username } = JSON.parse(userCookie as string);
+                setUser(username);
+            } catch (e) {
+                redirect('/login')
+            }
+        } else {
+            setUser(null);
+        }
         setActiveSegment(segments[1]);
     }, [pathname]);
 
@@ -36,7 +47,7 @@ const Navbar = (props: { children: any; }) => {
                                 />
                                 <h1 className="hidden md:block lg:block text-sm">New Post</h1>
                             </div>
-                            <Link href={`/profile/${getCookie('user')}`}
+                            <Link href={`/profile/${user}`}
                                   className={`flex flex-col md:flex-row items-center justify-start gap-3 ${isActive('profile')}`}>
                                 <div className='w-7 h-7 my-auto bg-white rounded-xl'></div>
                                 <h1 className="hidden md:block lg:block text-sm">Profile</h1>

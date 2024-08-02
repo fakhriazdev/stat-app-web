@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import AuthService from '../services/AuthService';
 import toast from 'react-hot-toast';
 import {deleteCookie, getCookie, setCookie} from 'cookies-next';
+import {jwtDecode} from "jwt-decode";
 
 interface User {
   username: string;
@@ -24,7 +25,10 @@ type RegisterPayload = { name:string ,username: string; password: string };
 const loginAction = createAsyncThunk('auth/login', async (payload: LoginPayload, { rejectWithValue }) => {
     try {
       const response =  await AuthService.login(payload);
-      setCookie('user', response.data.username,);
+      if(response.statusCode === 202){
+        const user = await AuthService.userInfo()
+        setCookie('user',JSON.stringify(user))
+      }
       return response
     } catch (error: any) {
       const errorMessage = error.response.data.message;
