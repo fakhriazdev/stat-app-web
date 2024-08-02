@@ -2,7 +2,7 @@
 import React, {useEffect, useState} from 'react';
 import Image from "next/image";
 import {
-    Activity, Heart,
+    Activity,
     People,
     Personalcard, Star1,
 } from "iconsax-react";
@@ -12,12 +12,23 @@ import {useDispatch, useSelector} from "react-redux";
 import {AppDispatch, RootState} from "@/app/lib/store";
 import {profileAction} from "@/app/lib/features/profileSlice";
 import {getCookie} from 'cookies-next';
-import {readableTimes} from "@/app/utils/readableTimes";
+
+interface Profile {
+    userId: string;
+    user: {
+        name: string;
+    };
+    title: string;
+    projects: any[];
+    follower: any[];
+    bio: string;
+    education: any[];
+}
 
 export default function Page() {
     const {username} = JSON.parse(getCookie('user') as string)
     const dispatch = useDispatch<AppDispatch>();
-    const { profile } = useSelector((state: RootState) => state.profile);
+    const profile:Profile = useSelector((state: RootState) => state.profile.profile) as Profile;
     const [toggleContent, setToggleContent] = useState(true)
     const handleToggleContent = (value:boolean) :void=>{
         setToggleContent(value)
