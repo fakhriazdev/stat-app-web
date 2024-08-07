@@ -3,12 +3,20 @@ import {ArrowSquareRight, Heart, Messages1} from "iconsax-react";
 import NewPost from "@/app/components/shared/NewPost";
 import Link from "next/link";
 import {readableTimes} from "@/app/utils/readableTimes";
+import {useDispatch, useSelector} from "react-redux";
+import {AppDispatch, RootState} from "@/app/lib/store";
+import {commentsAction} from "@/app/lib/features/commentsSlice";
 
 interface PostProps {
     projects?: any[];
 }
 const Post: React.FC<PostProps> = (props) => {
     const {projects} = props
+    const dispatch = useDispatch<AppDispatch>();
+    const { comments } = useSelector((state: RootState) => state.comment);
+    const handleFetchComment =(projectId:string)=>{
+        dispatch(commentsAction(projectId))
+    }
     return (
         <>
             <NewPost/>
@@ -43,45 +51,34 @@ const Post: React.FC<PostProps> = (props) => {
                                     <p className="font-light">{project?.description}</p>
                                 </div>
                                 <div className="flex gap-4 text-xs px-4 py-3">
-                                    <div className="flex gap-1"><Messages1
+                                    <button className="flex gap-1" onClick={()=>handleFetchComment(project?.uuid)}><Messages1
                                         size="18"
                                     />Comments
-                                    </div>
+                                    </button>
                                     <div className="flex gap-1"><Heart
                                         size="18"
                                     />Likes
                                     </div>
                                 </div>
                                 <div className="w-full dark:bg-black rounded-2xl mb-3">
-                                    <div
-                                        className='w-full bg-black/10 dark:bg-black border-b border-black/20 dark:border-white/20 px-4 py-3'>
-                                        <div className="flex gap-2 mb-1">
-                                            <div className="h-8 w-8 rounded-full bg-white"></div>
-                                            <div className='my-auto'>
-                                                <h1 className="font-normal text-sm">user1</h1>
-                                                <p className="text-xs">21.00</p>
+                                    {comments.filter(comment => comment.projectId === project.uuid).map(comment => (
+                                        <div
+                                            className='w-full bg-black/10 dark:bg-black border-b border-black/20 dark:border-white/20 px-4 py-3' key={comment?.uuid}>
+                                            <div className="flex gap-2 mb-1">
+                                                <div className="h-8 w-8 rounded-full bg-white"></div>
+                                                <div className='my-auto'>
+                                                    <h1 className="font-normal text-sm">{comment?.userId}</h1>
+                                                    <p className="text-xs">{readableTimes(comment?.createdAt)}</p>
+                                                </div>
+                                            </div>
+                                            <div className="w-full p-2 text-sm">{comment?.comment}
                                             </div>
                                         </div>
-                                        <div className="w-full p-2 text-sm">Good!
-                                        </div>
-                                    </div>
-                                    <div
-                                        className='w-full bg-black/10 dark:bg-black border-b border-black/20 dark:border-white/20 px-4 py-3'>
-                                        <div className="flex gap-2 mb-1">
-                                            <div className="h-8 w-8 rounded-full bg-white"></div>
-                                            <div className='my-auto'>
-                                                <h1 className="font-semibold text-sm">user1</h1>
-                                                <p className="text-xs">21.00</p>
-                                            </div>
-                                        </div>
-                                        <div className="w-full p-2 text-sm">Good!
-                                        </div>
-                                    </div>
+                                    ))}
                                 </div>
                                 <div className="flex p-4">
                                     <div className="w-full relative flex">
                                     <textarea
-
                                         className="relative resize-none h-auto min-h-4 overflow-hidden m-0 block flex-auto rounded-2xl border-2 border-solid border-black/20 bg-black/10 bg-clip-padding px-3 py-[0.25rem] text-base font-normal leading-[1.6] text-surface outline-none transition duration-200 ease-in-out placeholder:text-black dark:placeholder:text-white focus:z-[3] focus:border-primary focus:shadow-inset focus:outline-none motion-reduce:transition-none dark:border-white/10 dark:text-white dark:autofill:shadow-autofill dark:focus:border-primary"
                                         placeholder="Comment"
                                         aria-label="Search"
