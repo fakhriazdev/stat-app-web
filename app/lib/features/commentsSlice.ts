@@ -14,9 +14,9 @@ const initialState: CommentsState = {
 
 const commentsAction = createAsyncThunk<Comment[], string, { rejectValue: string }>(
     'comments/fetchComments',
-    async (postId: string, { rejectWithValue }) => {
+    async (projectId: string, { rejectWithValue }) => {
         try {
-            const response = await CommentService.getComment(postId);
+            const response = await CommentService.getComment(projectId);
             return response.data;
         } catch (error: any) {
             const errorMessage = error.response?.data?.message || 'An error occurred';
@@ -24,12 +24,13 @@ const commentsAction = createAsyncThunk<Comment[], string, { rejectValue: string
         }
     }
 );
-
-
 const commentsSlice = createSlice({
     name: 'comments',
     initialState,
     reducers: {
+        clearComments: (state) => {
+            state.comments = []; // Clear the comments array
+        },
     },
     extraReducers: (builder) => {
         builder
@@ -37,13 +38,8 @@ const commentsSlice = createSlice({
                 toast.loading("Loading...");
             })
             .addCase(commentsAction.fulfilled, (state, { payload}) => {
+                state.comments = payload
 
-
-                const newComments = payload.filter(
-                    (newComment) => !state.comments.some(comment => comment.uuid === newComment.uuid)
-                );
-                state.comments = [...state.comments, ...newComments];
-                console.log(state.comments)
                 toast.dismiss();
             })
             .addCase(commentsAction.rejected, (_, action) => {
@@ -54,6 +50,6 @@ const commentsSlice = createSlice({
     },
 });
 
-// export const { toggleVisibility } = commentsSlice.actions;
+export const { clearComments } = commentsSlice.actions;
 export default commentsSlice.reducer;
 export { commentsAction };

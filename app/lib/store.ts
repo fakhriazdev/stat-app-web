@@ -5,12 +5,14 @@ import asyncActionMiddleware from '@/app/lib/asyncActionMiddleware';
 import { store } from 'next/dist/build/output/store';
 import profileSlice from "@/app/lib/features/profileSlice";
 import commentsSlice from "@/app/lib/features/commentsSlice";
+import projectSlice from "@/app/lib/features/ProjectSlice";
 
 const rootReducer = combineReducers({
     auth: authReducer,
     ui: uiSliceReducer,
     profile:profileSlice,
     comment:commentsSlice,
+    project:projectSlice,
 });
 const setupStore = () =>
   configureStore({

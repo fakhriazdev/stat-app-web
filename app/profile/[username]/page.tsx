@@ -12,11 +12,13 @@ import {useDispatch, useSelector} from "react-redux";
 import {AppDispatch, RootState} from "@/app/lib/store";
 import {profileAction} from "@/app/lib/features/profileSlice";
 import {getCookie} from 'cookies-next';
+import {projectAction} from "@/app/lib/features/ProjectSlice";
 
 
 export default function Page() {
     const {username} = JSON.parse(getCookie('user') as string)
     const dispatch = useDispatch<AppDispatch>();
+    const { projects } = useSelector((state: RootState) => state.project);
     const profile = useSelector((state: RootState) => state.profile.profile) as any;
     const [toggleContent, setToggleContent] = useState(true)
     const handleToggleContent = (value:boolean) :void=>{
@@ -24,13 +26,14 @@ export default function Page() {
     }
 
     let isSelf = false
+
     useEffect(() => {
+        dispatch(projectAction());
         isSelf = username === profile.userId
         if (username) {
             dispatch(profileAction(username));
         }
     }, [dispatch,username]);
-
     return (
         <>
 
@@ -104,7 +107,7 @@ export default function Page() {
                     <h1 className="m-auto font-normal text-sm">Details</h1>
                 </button>
             </div>
-            {toggleContent ? <Post projects = {profile?.projects} /> : <Detail  details={{ education: profile?.education, projects: profile?.projects }}/>}
+            {toggleContent ? <Post projects = {projects} /> : <Detail  details={{ education: profile?.education, projects: profile?.projects }}/>}
         </>
     );
 };
