@@ -4,7 +4,7 @@ const nextConfig = {
     return [
       {
         source: '/api/:path*',
-        destination: 'https://nest-api-portfolio.onrender.com/api/:path*',
+        destination: 'https://nest-api-portfolio.vercel.app/api/:path*',
       },
     ];
   },
